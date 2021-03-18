@@ -4,6 +4,7 @@ import Head from 'next/head'
 import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import theme from '../src/theme'
+import ModalFlagProvider from '../context/ModalFlag'
 
 export default function MyApp(props) {
 	const { Component, pageProps } = props
@@ -29,7 +30,11 @@ export default function MyApp(props) {
 				{/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
 				<CssBaseline />
 				<div suppressHydrationWarning>
-					{typeof window === 'undefined' ? null : <Component {...pageProps} />}
+					{typeof window === 'undefined' ? null : (
+						<ModalFlagProvider>
+							<Component {...pageProps} />
+						</ModalFlagProvider>
+					)}
 				</div>
 			</ThemeProvider>
 		</React.Fragment>

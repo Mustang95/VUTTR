@@ -1,46 +1,23 @@
+import { useState } from 'react'
 import Head from 'next/head'
-import Typography from '@material-ui/core/Typography'
-import Card from '@material-ui/core/Card'
-import CardHeader from '@material-ui/core/CardHeader'
-import CardActions from '@material-ui/core/CardActions'
-import CardContent from '@material-ui/core/CardContent'
-import CardActionArea from '@material-ui/core/CardActionArea'
-import DeleteIcon from '@material-ui/icons/Delete'
 import { fade, makeStyles } from '@material-ui/core/styles'
-import CloseIcon from '@material-ui/icons/Close'
 import SearchIcon from '@material-ui/icons/Search'
-import AddIcon from '@material-ui/icons/Add'
 
 import {
 	Grid,
-	TextField,
 	FormControlLabel,
 	Checkbox,
-	Button,
-	IconButton,
 	Box,
-	Link,
-	Divider,
-	StylesProvider,
 	InputBase,
 } from '@material-ui/core'
 import useAPI from '../hooks/useAPI'
+import AppAppBar from '../components/AppAppBar'
+import CardListITooltem from '../components/CardListITooltem'
+import AddToolDialog from '../components/AddToolDialog'
+import ButtonDialog from '../components/ButtonDialog'
 const useStyles = makeStyles((theme) => ({
-	root: {
-		'& > * + *': {
-			marginLeft: theme.spacing(2),
-		},
-	},
-	linkTitle: {
-		fontWeight: '600',
-		fontSize: '1.8rem',
-	},
-	cardMargin: {
-		margin: '1rem',
-	},
 	search: {
 		position: 'relative',
-
 		borderRadius: theme.shape.borderRadius,
 		backgroundColor: fade(theme.palette.common.white, 0.15),
 		'&:hover': {
@@ -82,19 +59,19 @@ const useStyles = makeStyles((theme) => ({
 export default function Home() {
 	const classes = useStyles()
 	const { response } = useAPI()
-	const preventDefault = (event) => event.preventDefault()
+	const [onlyTags, setOnlyTags] = useState(false)
+	const [filterValue, setFilterValue] = useState('')
 	return (
 		<div>
 			<Head>
 				<title> Início | Books</title>
 			</Head>
-			<Grid container justify='center' spacing={3}>
+			<Grid container justify='center'>
 				<Grid item xs={12} sm={11} xl={8}>
-					<Typography variant='h1'>VUTTR</Typography>
-					<Typography variant='h4'>Very Useful Tools to Remember</Typography>
+					<AppAppBar />
 					<Grid container justify='center' spacing={3}>
-						{/* <Box display='flex' flexShrink={4}> */}
 						<Box justifyContent='flex-start' margin={3} flexShrink={1}>
+							{/*  */}
 							<div className={classes.search}>
 								<div className={classes.searchIcon}>
 									<SearchIcon />
@@ -105,9 +82,14 @@ export default function Home() {
 										root: classes.inputRoot,
 										input: classes.inputInput,
 									}}
+									value={filterValue}
+									onChange={(event) => {
+										setFilterValue(event.target.value)
+									}}
 									inputProps={{ 'aria-label': 'search' }}
 								/>
 							</div>
+							{/*  */}
 						</Box>
 						<Box
 							flexGrow={1}
@@ -115,59 +97,67 @@ export default function Home() {
 							margin={3}
 							flexShrink={1}
 						>
+							{/*  */}
 							<FormControlLabel
-								control={<Checkbox name='gilad' />}
-								label='Gilad Gray'
+								control={
+									<Checkbox
+										value={onlyTags}
+										checked={onlyTags}
+										onClick={(event) => {
+											setOnlyTags(event.target.checked)
+										}}
+										color='primary'
+										name='tag'
+									/>
+								}
+								label='Search in tags only'
 							/>
+							{/*  */}
 						</Box>
 						<Box justifyContent='flex-end' flexShrink={1} margin={3}>
-							<Button
-								variant='contained'
-								color='secondary'
-								startIcon={<AddIcon />}
-							>
-								Add
-							</Button>
+							{/*  */}
+							<ButtonDialog />
+							<AddToolDialog />
+							{/*  */}
 						</Box>
-						{/* </Box> */}
 					</Grid>
-					{response?.map((item) => (
-						<Card key={item.id} className={classes.cardMargin}>
-							<CardHeader
-								title={
-									<Link
-										component='button'
-										variant='body2'
-										onClick={preventDefault}
-										className={classes.linkTitle}
-									>
-										{item.title}
-									</Link>
-								}
-								action={
-									<Button color='secondary' startIcon={<CloseIcon />}>
-										remove
-									</Button>
-								}
-							></CardHeader>
-							<CardContent>
-								<Typography variant='body1' color='textSecondary' component='p'>
-									{item.description}
-								</Typography>
-								<Box margin={2}>{/* <Divider /> */}</Box>
-								{item.tags.map((tag, key) => (
-									<Link
-										key={key}
-										component='button'
-										variant='body2'
-										onClick={preventDefault}
-									>
-										#{tag}{' '}
-									</Link>
+					{onlyTags ? (
+						<>
+							{response
+								?.filter((tag) => {
+									for (let i = 0; i < tag.tags.length; i++) {
+										if (filterValue === '') {
+											return tag
+										} else if (
+											tag.tags[i]
+												.toLowerCase()
+												.includes(filterValue.toLowerCase())
+										) {
+											return tag
+										}
+									}
+								})
+								.map((item) => (
+									<CardListITooltem item={item} key={item.id} />
 								))}
-							</CardContent>
-						</Card>
-					))}
+						</>
+					) : (
+						<>
+							{response
+								?.filter((val) => {
+									if (filterValue === '') {
+										return val
+									} else if (
+										val.title.toLowerCase().includes(filterValue.toLowerCase())
+									) {
+										return val
+									}
+								})
+								.map((item) => (
+									<CardListITooltem item={item} key={item.id} />
+								))}
+						</>
+					)}
 				</Grid>
 			</Grid>
 		</div>

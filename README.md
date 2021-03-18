@@ -1,8 +1,16 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-Using library of components to develop fast design [Material-ui](https://material-ui.com/pt/)
+Using [Material-ui](https://material-ui.com/pt/) library of components to develop fast design
+
+Using Axios promise HTTP client for browser and node.js (make it easier to access REST)
 
 ## Getting Started
+
+#init the [fake api](https://github.com/gustavo-startaideia/rest-fake-api)
+
+```bash
+json-server -p 8080 db.json
+```
 
 #to add dependencies
 

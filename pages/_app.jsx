@@ -4,7 +4,6 @@ import Head from 'next/head'
 import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import theme from '../src/theme'
-import ModalFlagProvider from '../context/ModalFlag'
 import ToolDataProvider from '../context/ToolData'
 import ToolListProvider from '../context/ToolList'
 
@@ -35,9 +34,7 @@ export default function MyApp(props) {
 					{typeof window === 'undefined' ? null : (
 						<ToolListProvider>
 							<ToolDataProvider>
-								<ModalFlagProvider>
-									<Component {...pageProps} />
-								</ModalFlagProvider>
+								<Component {...pageProps} />
 							</ToolDataProvider>
 						</ToolListProvider>
 					)}

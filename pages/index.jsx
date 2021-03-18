@@ -14,8 +14,6 @@ import useAPI from '../hooks/useAPI'
 import AppAppBar from '../components/AppAppBar'
 import CardListITooltem from '../components/CardListITooltem'
 import AddToolDialog from '../components/AddToolDialog'
-import ButtonDialog from '../components/ButtonDialog'
-import { generateId } from '../helpers/helpers'
 import { useToolList } from '../context/ToolList'
 const useStyles = makeStyles((theme) => ({
 	search: {
@@ -63,20 +61,15 @@ export default function Home() {
 	const { response, setResponse } = useAPI()
 	const { toolList, setToolList } = useToolList()
 	useEffect(() => {
-		debugger
 		let newToolList
 		if (response?.length === toolList?.length) {
 			newToolList = response
-			console.log('response', response)
 		} else {
 			newToolList = toolList
 			setToolList(newToolList)
 			setResponse(newToolList)
-			console.log('toolist', toolList)
 		}
 	}, [toolList])
-
-	//generateId(response)
 	const [onlyTags, setOnlyTags] = useState(false)
 	const [filterValue, setFilterValue] = useState('')
 	return (
@@ -134,7 +127,7 @@ export default function Home() {
 						</Box>
 						<Box justifyContent='flex-end' flexShrink={1} margin={3}>
 							{/*  */}
-							<ButtonDialog />
+							{/* <ButtonDialog /> */}
 							<AddToolDialog />
 							{/*  */}
 						</Box>

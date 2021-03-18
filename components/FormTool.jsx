@@ -6,35 +6,59 @@ import ChipInput from 'material-ui-chip-input'
 import BuildIcon from '@material-ui/icons/Build'
 import LinkIcon from '@material-ui/icons/Link'
 import DescriptionIcon from '@material-ui/icons/Description'
+import Snackbar from '@material-ui/core/Snackbar'
 import { makeStyles } from '@material-ui/core/styles'
 
 import { useToolData } from '../context/ToolData.jsx'
+import { useEffect, useState } from 'react'
 const useStyles = makeStyles((theme) => ({
 	margin: {
 		margin: theme.spacing(1),
 	},
 }))
-export default function FormTool() {
+export default function FormTool(props) {
 	const classes = useStyles()
 	const { toolData, setToolData } = useToolData()
+	const [openToast, setOpenToast] = useState(false)
+	const [errorTitle, setErrorTitle] = useState(false)
+	const [errorLink, setErrorLink] = useState(false)
+	const [errorDesc, setErrorDescription] = useState(false)
+	const [messageToast, setMessageToast] = useState('')
 
 	const handleChange = (prop) => (event) => {
 		setToolData({ ...toolData, [prop]: event?.target?.value })
-		console.log(toolData)
+	}
+	const handleClose = (event, reason) => {
+		if (reason === 'clickaway') {
+			return
+		}
+		setOpenToast(false)
 	}
 	function handleAddChip(chip) {
-		//create toast msg
 		toolData.tags.push(chip)
+		setOpenToast(true)
+		setMessageToast('Tag added!')
 	}
 	function handleDeleteChip(chip, index) {
-		//create toast msg
-		toolData.tags.splice(index, 1)
+		setOpenToast(true)
+		setMessageToast('Tag removed!')
+		const newToolData = toolData
+		newToolData.tags.splice(index, 1)
+		setToolData(newToolData)
 	}
+	useEffect(() => {
+		setErrorTitle(props.requiredFields.title)
+		setErrorLink(props.requiredFields.link)
+		setErrorDescription(props.requiredFields.description)
+		setToolData(toolData)
+	}, [errorTitle, errorLink, errorDesc, toolData])
+
 	return (
 		<div>
 			<form onSubmit={handleChange}>
 				<FormControl
 					required
+					error={errorTitle}
 					fullWidth
 					className={classes.margin}
 					variant='outlined'
@@ -54,6 +78,7 @@ export default function FormTool() {
 				</FormControl>
 				<FormControl
 					required
+					error={errorLink}
 					fullWidth
 					className={classes.margin}
 					variant='outlined'
@@ -73,6 +98,7 @@ export default function FormTool() {
 				</FormControl>
 				<FormControl
 					required
+					error={errorDesc}
 					fullWidth
 					className={classes.margin}
 					variant='outlined'
@@ -94,7 +120,8 @@ export default function FormTool() {
 				</FormControl>
 
 				<FormControl
-					required
+					// required
+					// error={error}
 					fullWidth
 					className={classes.margin}
 					variant='outlined'
@@ -108,6 +135,16 @@ export default function FormTool() {
 					/>
 				</FormControl>
 			</form>
+			<Snackbar
+				open={openToast}
+				anchorOrigin={{
+					vertical: 'bottom',
+					horizontal: 'center',
+				}}
+				autoHideDuration={3000}
+				onClose={handleClose}
+				message={messageToast}
+			></Snackbar>
 		</div>
 	)
 }

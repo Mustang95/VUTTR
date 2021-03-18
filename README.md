@@ -4,9 +4,15 @@ Using library of components to develop fast design [Material-ui](https://materia
 
 ## Getting Started
 
+#to add dependencies
+
 ```bash
 yarn
-# or
+```
+
+#to run application
+
+```bash
 yarn dev
 ```
 

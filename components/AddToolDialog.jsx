@@ -17,21 +17,11 @@ import { generateId } from '../helpers/helpers'
 import { useToolList } from '../context/ToolList'
 import Snackbar from '@material-ui/core/Snackbar'
 const useStyles = makeStyles((theme) => ({
-	root: {
-		margin: 0,
-		padding: theme.spacing(2),
-	},
 	closeButton: {
 		position: 'absolute',
 		right: theme.spacing(1),
 		top: theme.spacing(1),
 		color: theme.palette.grey[500],
-	},
-	addIcon: {
-		paddingTop: theme.spacing(1),
-	},
-	alignTextCenter: {
-		textAlign: 'center',
 	},
 }))
 
@@ -121,7 +111,7 @@ export default function AddToolDialog() {
 		<>
 			<Button
 				variant='contained'
-				color='secondary'
+				color='primary'
 				startIcon={<AddIcon />}
 				onClick={handleClickOpen}
 			>

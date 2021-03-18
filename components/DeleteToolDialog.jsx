@@ -6,30 +6,21 @@ import Typography from '@material-ui/core/Typography'
 import DialogContent from '@material-ui/core/DialogContent'
 import MuiDialogTitle from '@material-ui/core/DialogTitle'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
-import { useTheme, makeStyles } from '@material-ui/core/styles'
+import { useTheme, makeStyles, createMuiTheme } from '@material-ui/core/styles'
 import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
 import Snackbar from '@material-ui/core/Snackbar'
 import { useToolList } from '../context/ToolList'
 import axios from 'axios'
 const useStyles = makeStyles((theme) => ({
-	root: {
-		margin: 0,
-		padding: theme.spacing(2),
-	},
 	closeButton: {
 		position: 'absolute',
 		right: theme.spacing(1),
 		top: theme.spacing(1),
 		color: theme.palette.grey[500],
 	},
-	addIcon: {
-		paddingTop: theme.spacing(1),
-	},
-	alignTextCenter: {
-		textAlign: 'center',
-	},
 }))
+const theme = createMuiTheme({})
 
 export default function DeleteToolDialog(props) {
 	const classes = useStyles()
@@ -103,7 +94,7 @@ export default function DeleteToolDialog(props) {
 				<DialogActions>
 					<Button
 						onClick={(event) => handleCancel(event)}
-						color='secondary'
+						color='default'
 						autoFocus
 						variant='contained'
 					>
@@ -111,7 +102,7 @@ export default function DeleteToolDialog(props) {
 					</Button>
 					<Button
 						onClick={(event) => handleDelete(event, props)}
-						color='primary'
+						color='secondary'
 						autoFocus
 						variant='contained'
 					>

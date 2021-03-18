@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	cardMargin: {
 		margin: '1rem',
+		backgroundColor: theme.palette.background.darker,
 	},
 }))
 export default function CardListITooltem(props) {

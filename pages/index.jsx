@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import Head from 'next/head'
-import { fade, makeStyles } from '@material-ui/core/styles'
+import { fade, makeStyles, createMuiTheme } from '@material-ui/core/styles'
 import SearchIcon from '@material-ui/icons/Search'
 
 import {
@@ -16,6 +16,9 @@ import CardListITooltem from '../components/CardListITooltem'
 import AddToolDialog from '../components/AddToolDialog'
 import { useToolList } from '../context/ToolList'
 const useStyles = makeStyles((theme) => ({
+	root: {
+		backgroundColor: theme.palette.background.default.main,
+	},
 	search: {
 		position: 'relative',
 		borderRadius: theme.shape.borderRadius,
@@ -44,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 		color: 'secondary',
 	},
 	inputInput: {
-		backgroundColor: '#4c44444d',
+		backgroundColor: theme.palette.background.mostDarkest,
 		padding: theme.spacing(1, 1, 1, 0),
 		// vertical padding + font size from searchIcon
 		paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
@@ -55,7 +58,6 @@ const useStyles = makeStyles((theme) => ({
 		},
 	},
 }))
-
 export default function Home() {
 	const classes = useStyles()
 	const { response, setResponse } = useAPI()
@@ -73,7 +75,7 @@ export default function Home() {
 	const [onlyTags, setOnlyTags] = useState(false)
 	const [filterValue, setFilterValue] = useState('')
 	return (
-		<div>
+		<div className={classes.root}>
 			<Head>
 				<title> Início | Books</title>
 			</Head>

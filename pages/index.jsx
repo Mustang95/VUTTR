@@ -15,6 +15,7 @@ import AppAppBar from '../components/AppAppBar'
 import CardListITooltem from '../components/CardListITooltem'
 import AddToolDialog from '../components/AddToolDialog'
 import ButtonDialog from '../components/ButtonDialog'
+import { generateId } from '../helpers/helpers'
 const useStyles = makeStyles((theme) => ({
 	search: {
 		position: 'relative',
@@ -59,6 +60,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Home() {
 	const classes = useStyles()
 	const { response } = useAPI()
+	//generateId(response)
 	const [onlyTags, setOnlyTags] = useState(false)
 	const [filterValue, setFilterValue] = useState('')
 	return (

@@ -5,6 +5,7 @@ import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import theme from '../src/theme'
 import ModalFlagProvider from '../context/ModalFlag'
+import ToolDataProvider from '../context/ToolData'
 
 export default function MyApp(props) {
 	const { Component, pageProps } = props
@@ -31,9 +32,11 @@ export default function MyApp(props) {
 				<CssBaseline />
 				<div suppressHydrationWarning>
 					{typeof window === 'undefined' ? null : (
-						<ModalFlagProvider>
-							<Component {...pageProps} />
-						</ModalFlagProvider>
+						<ToolDataProvider>
+							<ModalFlagProvider>
+								<Component {...pageProps} />
+							</ModalFlagProvider>
+						</ToolDataProvider>
 					)}
 				</div>
 			</ThemeProvider>

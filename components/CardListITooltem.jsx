@@ -6,6 +6,7 @@ import CardContent from '@material-ui/core/CardContent'
 import CloseIcon from '@material-ui/icons/Close'
 import { Button, Box, Link } from '@material-ui/core'
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles'
+import axios from 'axios'
 const useStyles = makeStyles((theme) => ({
 	root: {
 		'& > * + *': {
@@ -14,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	linkTitle: {
 		fontWeight: '600',
-		fontSize: '1.8rem',
+		fontSize: '1.5rem',
 	},
 	cardMargin: {
 		margin: '1rem',
@@ -23,26 +24,35 @@ const useStyles = makeStyles((theme) => ({
 export default function CardListITooltem(props) {
 	const classes = useStyles()
 	const preventDefault = (event) => event.preventDefault()
+	const onDelete = (event, id) => {
+		const postPayload = async () => {
+			try {
+				const response = await axios.delete(`http://localhost:8080/tools/${id}`)
+				console.log(response)
+				//dialog success msg
+			} catch (error) {
+				console.log(error)
+			}
+		}
+	}
 	return (
 		<Card key={props.item.id} className={classes.cardMargin}>
 			<CardHeader
 				title={
-					<Link
-						component='button'
-						variant='body2'
-						onClick={preventDefault}
-						className={classes.linkTitle}
-					>
+					<Button href={props.item.link} className={classes.linkTitle}>
 						{props.item.title}
-					</Link>
-				}
-				action={
-					<Button color='secondary' startIcon={<CloseIcon />}>
-						remove
 					</Button>
 				}
+				action=''
 			></CardHeader>
 			<CardContent>
+				<Button
+					onClick={onDelete(event, props.item.id)}
+					color='secondary'
+					startIcon={<CloseIcon />}
+				>
+					remove
+				</Button>
 				<Typography variant='body1' color='textSecondary' component='p'>
 					{props.item.description}
 				</Typography>

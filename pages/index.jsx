@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Head from 'next/head'
 import { fade, makeStyles } from '@material-ui/core/styles'
 import SearchIcon from '@material-ui/icons/Search'
@@ -16,6 +16,7 @@ import CardListITooltem from '../components/CardListITooltem'
 import AddToolDialog from '../components/AddToolDialog'
 import ButtonDialog from '../components/ButtonDialog'
 import { generateId } from '../helpers/helpers'
+import { useToolList } from '../context/ToolList'
 const useStyles = makeStyles((theme) => ({
 	search: {
 		position: 'relative',
@@ -59,7 +60,22 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Home() {
 	const classes = useStyles()
-	const { response } = useAPI()
+	const { response, setResponse } = useAPI()
+	const { toolList, setToolList } = useToolList()
+	useEffect(() => {
+		debugger
+		let newToolList
+		if (response?.length === toolList?.length) {
+			newToolList = response
+			console.log('response', response)
+		} else {
+			newToolList = toolList
+			setToolList(newToolList)
+			setResponse(newToolList)
+			console.log('toolist', toolList)
+		}
+	}, [toolList])
+
 	//generateId(response)
 	const [onlyTags, setOnlyTags] = useState(false)
 	const [filterValue, setFilterValue] = useState('')
@@ -125,7 +141,7 @@ export default function Home() {
 					</Grid>
 					{onlyTags ? (
 						<>
-							{response
+							{toolList
 								?.filter((tag) => {
 									for (let i = 0; i < tag.tags.length; i++) {
 										if (filterValue === '') {
@@ -145,7 +161,7 @@ export default function Home() {
 						</>
 					) : (
 						<>
-							{response
+							{toolList
 								?.filter((val) => {
 									if (filterValue === '') {
 										return val

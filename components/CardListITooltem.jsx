@@ -5,8 +5,9 @@ import CardHeader from '@material-ui/core/CardHeader'
 import CardContent from '@material-ui/core/CardContent'
 import CloseIcon from '@material-ui/icons/Close'
 import { Button, Box, Link } from '@material-ui/core'
-import { fade, makeStyles, useTheme } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles'
 import axios from 'axios'
+import { useToolList } from '../context/ToolList'
 const useStyles = makeStyles((theme) => ({
 	root: {
 		'& > * + *': {
@@ -24,16 +25,34 @@ const useStyles = makeStyles((theme) => ({
 export default function CardListITooltem(props) {
 	const classes = useStyles()
 	const preventDefault = (event) => event.preventDefault()
-	const onDelete = (event, id) => {
-		const postPayload = async () => {
-			try {
-				const response = await axios.delete(`http://localhost:8080/tools/${id}`)
-				console.log(response)
-				//dialog success msg
-			} catch (error) {
-				console.log(error)
-			}
+	const { toolList, setToolList } = useToolList()
+	//console.log(response)
+	console.log(toolList)
+
+	const onDelete = async (event, id, toolList) => {
+		console.log(toolList)
+
+		//responseAux
+		event.preventDefault()
+		try {
+			const res = await axios
+				.delete(`http://localhost:8080/tools/${id}`)
+				.then((res) => {
+					console.log(res)
+					const newToolList = [...toolList]
+					const indexToRemove = newToolList.findIndex(
+						(elem) => elem.id === props.item.id
+					)
+					newToolList.splice(indexToRemove, 1)
+					setToolList(newToolList)
+				})
+				.catch((error) => {
+					console.log(error)
+				})
+		} catch (error) {
+			console.log(error)
 		}
+		//dialog success msg
 	}
 	return (
 		<Card key={props.item.id} className={classes.cardMargin}>
@@ -43,20 +62,21 @@ export default function CardListITooltem(props) {
 						{props.item.title}
 					</Button>
 				}
-				action=''
+				action={
+					<Button
+						onClick={(event) => onDelete(event, props.item.id, toolList)}
+						color='secondary'
+						startIcon={<CloseIcon />}
+					>
+						remove
+					</Button>
+				}
 			></CardHeader>
 			<CardContent>
-				<Button
-					onClick={onDelete(event, props.item.id)}
-					color='secondary'
-					startIcon={<CloseIcon />}
-				>
-					remove
-				</Button>
 				<Typography variant='body1' color='textSecondary' component='p'>
 					{props.item.description}
 				</Typography>
-				<Box margin={2}>{/* <Divider /> */}</Box>
+				<Box margin={2}></Box>
 				{props.item.tags.map((tag, key) => (
 					<Link
 						key={key}

@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
 import OutlinedInput from '@material-ui/core/OutlinedInput'
@@ -7,7 +6,6 @@ import ChipInput from 'material-ui-chip-input'
 import BuildIcon from '@material-ui/icons/Build'
 import LinkIcon from '@material-ui/icons/Link'
 import DescriptionIcon from '@material-ui/icons/Description'
-import LabelIcon from '@material-ui/icons/Label'
 import { makeStyles } from '@material-ui/core/styles'
 
 import { useToolData } from '../context/ToolData.jsx'
@@ -19,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
 export default function FormTool() {
 	const classes = useStyles()
 	const { toolData, setToolData } = useToolData()
-	//const [datas, setDatas] = useState({})
 
 	const handleChange = (prop) => (event) => {
 		setToolData({ ...toolData, [prop]: event?.target?.value })
@@ -36,7 +33,12 @@ export default function FormTool() {
 	return (
 		<div>
 			<form onSubmit={handleChange}>
-				<FormControl fullWidth className={classes.margin} variant='outlined'>
+				<FormControl
+					required
+					fullWidth
+					className={classes.margin}
+					variant='outlined'
+				>
 					<InputLabel htmlFor='filled-adornment-password'>Tool Name</InputLabel>
 					<OutlinedInput
 						id='title'
@@ -47,10 +49,15 @@ export default function FormTool() {
 								<BuildIcon />
 							</InputAdornment>
 						}
-						labelWidth={80}
+						labelWidth={90}
 					/>
 				</FormControl>
-				<FormControl fullWidth className={classes.margin} variant='outlined'>
+				<FormControl
+					required
+					fullWidth
+					className={classes.margin}
+					variant='outlined'
+				>
 					<InputLabel htmlFor='filled-adornment-password'>Tool Link</InputLabel>
 					<OutlinedInput
 						id='link'
@@ -61,10 +68,15 @@ export default function FormTool() {
 								<LinkIcon />
 							</InputAdornment>
 						}
-						labelWidth={70}
+						labelWidth={80}
 					/>
 				</FormControl>
-				<FormControl fullWidth className={classes.margin} variant='outlined'>
+				<FormControl
+					required
+					fullWidth
+					className={classes.margin}
+					variant='outlined'
+				>
 					<InputLabel htmlFor='filled-adornment-password'>
 						Tool description
 					</InputLabel>
@@ -77,11 +89,16 @@ export default function FormTool() {
 								<DescriptionIcon />
 							</InputAdornment>
 						}
-						labelWidth={120}
+						labelWidth={130}
 					/>
 				</FormControl>
 
-				<FormControl fullWidth className={classes.margin} variant='outlined'>
+				<FormControl
+					required
+					fullWidth
+					className={classes.margin}
+					variant='outlined'
+				>
 					<ChipInput
 						label='Tags'
 						variant='outlined'

@@ -14,7 +14,7 @@ import FormTool from '../components/FormTool'
 import { useToolData } from '../context/ToolData'
 import axios from 'axios'
 import { generateId } from '../helpers/helpers'
-import useAPI from '../hooks/useAPI'
+import { useToolList } from '../context/ToolList'
 const useStyles = makeStyles((theme) => ({
 	root: {
 		margin: 0,
@@ -40,13 +40,13 @@ export default function AddToolDialog() {
 	const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
 	const { open, setOpen } = useFlag() // criar hook pra usar como flag
 	const { toolData, setToolData } = useToolData()
-	const { response } = useAPI()
+	const { toolList, setToolList } = useToolList()
 	const handleClose = () => {
 		setOpen(false)
 	}
 	const handleChange = () => {
 		const newToolData = toolData
-		newToolData.id = generateId(response)
+		newToolData.id = generateId(toolList)
 		setToolData(newToolData)
 		const postPayload = async () => {
 			try {
@@ -57,6 +57,9 @@ export default function AddToolDialog() {
 						console.log(response)
 						//dialog success msg
 						//setResponse(response.data)
+						const newToolList = [...toolList]
+						newToolList.push(response.data)
+						setToolList(newToolList)
 						setToolData({
 							id: generateId(),
 							title: '',

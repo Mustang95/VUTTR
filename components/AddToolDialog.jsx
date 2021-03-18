@@ -29,7 +29,6 @@ export default function AddToolDialog() {
 	const classes = useStyles()
 	const theme = useTheme()
 	const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
-	//const { open, setOpen } = useFlag() // criar hook pra usar como flag
 	const [open, setOpen] = useState(false)
 	const handleClickOpen = () => {
 		setOpen(!open)

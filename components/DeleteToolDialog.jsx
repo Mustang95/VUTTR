@@ -5,8 +5,7 @@ import DialogActions from '@material-ui/core/DialogActions'
 import Typography from '@material-ui/core/Typography'
 import DialogContent from '@material-ui/core/DialogContent'
 import MuiDialogTitle from '@material-ui/core/DialogTitle'
-import useMediaQuery from '@material-ui/core/useMediaQuery'
-import { useTheme, makeStyles, createMuiTheme } from '@material-ui/core/styles'
+import { makeStyles, createMuiTheme } from '@material-ui/core/styles'
 import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
 import Snackbar from '@material-ui/core/Snackbar'
@@ -24,10 +23,9 @@ const theme = createMuiTheme({})
 
 export default function DeleteToolDialog(props) {
 	const classes = useStyles()
-	//const { open, setOpen } = useFlag() // criar hook pra usar como flag
+	const { toolList, setToolList } = useToolList()
 	const [openToast, setOpenToast] = useState(false)
 	const [messageToast, setMessageToast] = useState('')
-	const { toolList, setToolList } = useToolList()
 	const [open, setOpen] = useState(false)
 	const handleClickOpen = () => {
 		setOpen(!open)
@@ -39,7 +37,6 @@ export default function DeleteToolDialog(props) {
 		setOpenToast(false)
 	}
 	const handleDelete = async (event, props) => {
-		//responseAux
 		event.preventDefault()
 		try {
 			const res = await axios
@@ -49,6 +46,8 @@ export default function DeleteToolDialog(props) {
 					const indexToRemove = newToolList.findIndex(
 						(elem) => elem.id === props.deleteToolId
 					)
+					//setOpenToast(true) splice remove action of snackbar...
+					//setMessageToast('Tool removed!')
 					newToolList.splice(indexToRemove, 1)
 					setToolList(newToolList)
 				})
@@ -59,6 +58,7 @@ export default function DeleteToolDialog(props) {
 			console.log(error)
 		}
 	}
+
 	const handleCancel = (event) => {
 		event.preventDefault()
 		setOpen(false)

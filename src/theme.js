@@ -1,7 +1,27 @@
 import { createMuiTheme } from '@material-ui/core/styles'
 
-// Create a theme instance.
+// Create a theme instance. for bossa box
 const theme = createMuiTheme({
+	typography: {
+		//body
+		fontFamily: ['Source Sans Pro'],
+		color: '#170C3A',
+		fontSize: 18,
+		fontWeight: 400,
+		letterSpacing: '0.4px',
+		h1: {
+			fontFamily: ['Source Sans Pro'],
+			fontWeight: 600,
+			color: '#170C3A',
+			fontSize: '42px',
+		},
+		body1: {
+			//bodySmall
+		},
+		body2: {
+			//bodySmallest
+		},
+	},
 	palette: {
 		primary: {
 			//blues

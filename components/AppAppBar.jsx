@@ -5,13 +5,19 @@ const useStyles = makeStyles((theme) => ({
 	headerMargin: {
 		margin: '1rem',
 	},
+	headerLetterSpacing: {
+		letterSpacing: '0.4px',
+	},
 }))
 export default function AppAppBar() {
 	const classes = useStyles()
+	//className={classes.fontHeader}
 	return (
-		<header className={classes.headerMargin}>
+		<header>
 			<Typography variant='h1'>VUTTR</Typography>
-			<Typography variant='h4'>Very Useful Tools to Remember</Typography>
+			<Typography variant='h4' className={classes.headerLetterSpacing}>
+				Very Useful Tools to Remember
+			</Typography>
 		</header>
 	)
 }

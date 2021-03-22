@@ -1,35 +1,53 @@
 import { useState } from 'react'
-import Button from '@material-ui/core/Button'
-import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import Typography from '@material-ui/core/Typography'
-import DialogContent from '@material-ui/core/DialogContent'
-import MuiDialogTitle from '@material-ui/core/DialogTitle'
-import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { useTheme, makeStyles } from '@material-ui/core/styles'
-import AddIcon from '@material-ui/icons/Add'
-import IconButton from '@material-ui/core/IconButton'
-import CloseIcon from '@material-ui/icons/Close'
-import FormTool from '../components/FormTool'
 import { useToolData } from '../context/ToolData'
-import axios from 'axios'
 import { generateId } from '../helpers/helpers'
 import { useToolList } from '../context/ToolList'
-import Snackbar from '@material-ui/core/Snackbar'
+import useGlobalStyles from '../styles/global'
+import FormTool from '../components/FormTool'
+import axios from 'axios'
+
+import {
+	Button,
+	Dialog,
+	DialogActions,
+	Typography,
+	DialogContent,
+	useMediaQuery,
+	IconButton,
+	Snackbar,
+} from '@material-ui/core'
+
+import AddIcon from '@material-ui/icons/Add'
+import MuiDialogTitle from '@material-ui/core/DialogTitle'
+import { useToolStateHandlingErrors } from '../context/ToolStateErrors'
+
 const useStyles = makeStyles((theme) => ({
+	closeIcon: {
+		width: '15px',
+		height: '15px',
+	},
 	closeButton: {
-		position: 'absolute',
 		right: theme.spacing(1),
+		position: 'absolute',
 		top: theme.spacing(1),
 		color: theme.palette.grey[500],
+		margin: '0.7rem 0.5rem 1rem 1rem',
+	},
+	actionMargin: {
+		margin: '1rem 1rem 1rem 1rem',
 	},
 }))
 
 export default function AddToolDialog() {
 	const classes = useStyles()
+	const globalClasses = useGlobalStyles()
 	const theme = useTheme()
+
 	const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
 	const [open, setOpen] = useState(false)
+	const { toolStateErrors, setToolStateErrors } = useToolStateHandlingErrors()
+
 	const handleClickOpen = () => {
 		setOpen(!open)
 	}
@@ -43,6 +61,44 @@ export default function AddToolDialog() {
 	const handleCloseToast = () => {
 		setOpenToast(false)
 	}
+
+	const hasInvalidFields = {
+		fields: {
+			title: toolStateErrors.errorTitle,
+			link: toolStateErrors.errorLink,
+			description: toolStateErrors.errorDescription,
+		},
+		hasErrors: false,
+	}
+
+	function setErrors(toolData) {
+		debugger
+		if (toolData.title === '') {
+			hasInvalidFields.fields.title = true
+			hasInvalidFields.hasErrors = true
+		} else {
+			hasInvalidFields.fields.title = false
+		}
+		if (toolData.link === '') {
+			hasInvalidFields.fields.link = true
+			hasInvalidFields.hasErrors = true
+		} else {
+			hasInvalidFields.fields.link = false
+		}
+		if (toolData.description === '') {
+			hasInvalidFields.fields.description = true
+			hasInvalidFields.hasErrors = true
+		} else {
+			hasInvalidFields.fields.description = false
+		}
+		setToolStateErrors({
+			errorTitle: hasInvalidFields.fields.title,
+			errorLink: hasInvalidFields.fields.link,
+			errorDescription: hasInvalidFields.fields.description,
+		})
+		return hasInvalidFields
+	}
+
 	const handleChange = () => {
 		const newToolData = toolData
 		const hasInvalidFields = setErrors(newToolData)
@@ -82,39 +138,23 @@ export default function AddToolDialog() {
 			setMessageToast('Please fill the required fields')
 		}
 	}
-	const hasInvalidFields = {
-		fields: {
-			title: false,
-			link: false,
-			description: false,
-			//tags: []
-		},
-		hasErrors: false,
-	}
-	function setErrors(toolData) {
-		if (toolData.title === '') {
-			hasInvalidFields.fields.title = true
-			hasInvalidFields.hasErrors = true
-		}
-		if (toolData.link === '') {
-			hasInvalidFields.fields.link = true
-			hasInvalidFields.hasErrors = true
-		}
-		if (toolData.description === '') {
-			hasInvalidFields.fields.description = true
-			hasInvalidFields.hasErrors = true
-		}
-		return hasInvalidFields
-	}
+
 	return (
 		<>
 			<Button
 				variant='contained'
 				color='primary'
-				startIcon={<AddIcon />}
+				startIcon={
+					<AddIcon
+						fontSize='large'
+						className={globalClasses.defaultColorButtonText}
+					/>
+				}
 				onClick={handleClickOpen}
 			>
-				Add
+				<Typography className={globalClasses.defaultColorButtonText}>
+					Add
+				</Typography>
 			</Button>
 			<Dialog
 				fullScreen={fullScreen}
@@ -129,16 +169,20 @@ export default function AddToolDialog() {
 						className={classes.closeButton}
 						onClick={handleClose}
 					>
-						<CloseIcon />
+						<img
+							src='/Icon-Close-2px.svg'
+							alt='image'
+							className={classes.closeIcon}
+						/>
 					</IconButton>
 				</MuiDialogTitle>
-				<DialogContent dividers>
+				<DialogContent>
 					<FormTool
 						requiredFields={hasInvalidFields.fields}
 						onChange={hasInvalidFields.fields}
 					/>
 				</DialogContent>
-				<DialogActions>
+				<DialogActions className={classes.actionMargin}>
 					<Button
 						onClick={handleChange}
 						color='primary'

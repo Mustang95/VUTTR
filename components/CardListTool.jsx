@@ -1,59 +1,53 @@
 import { useState, useEffect } from 'react'
-import { fade, makeStyles } from '@material-ui/core/styles'
-import SearchIcon from '@material-ui/icons/Search'
+import { makeStyles } from '@material-ui/core/styles'
+
+import useAPI from '../hooks/useAPI'
+import CardListITooltem from './CardListITooltem'
+import AddToolDialog from './AddToolDialog'
+import { useToolList } from '../context/ToolList'
+import ToolStateErrorsProvider from '../context/ToolStateErrors'
 
 import {
 	Grid,
 	FormControlLabel,
 	Checkbox,
 	Box,
-	InputBase,
+	FormControl,
+	TextField,
+	InputAdornment,
 } from '@material-ui/core'
-import useAPI from '../hooks/useAPI'
-import CardListITooltem from './CardListITooltem'
-import AddToolDialog from './AddToolDialog'
-import { useToolList } from '../context/ToolList'
+
 const useStyles = makeStyles((theme) => ({
 	root: {
 		backgroundColor: theme.palette.background.default.main,
 	},
-	search: {
-		position: 'relative',
-		borderRadius: theme.shape.borderRadius,
-		backgroundColor: fade(theme.palette.common.white, 0.15),
-		'&:hover': {
-			backgroundColor: fade(theme.palette.common.white, 0.25),
-		},
-		marginRight: theme.spacing(2),
-		marginLeft: 0,
-		width: '100%',
-		[theme.breakpoints.up('sm')]: {
-			marginLeft: theme.spacing(3),
-			width: 'auto',
-		},
+	marginRight: {
+		marginRight: '1rem',
 	},
-	searchIcon: {
-		padding: theme.spacing(0, 2),
-		height: '100%',
-		position: 'absolute',
-		pointerEvents: 'none',
-		display: 'flex',
-		alignItems: 'center',
-		justifyContent: 'center',
+	miniPadding: {
+		padding: '5px 0px 0px 5px',
 	},
-	inputRoot: {
+	marginLeft: {
+		marginLeft: '1rem',
+	},
+	cssOutlinedInput: {
 		color: 'secondary',
-	},
-	inputInput: {
-		backgroundColor: theme.palette.background.mostDarkest,
-		padding: theme.spacing(1, 1, 1, 0),
-		// vertical padding + font size from searchIcon
-		paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-		transition: theme.transitions.create('width'),
-		width: '100%',
-		[theme.breakpoints.up('md')]: {
-			width: '20ch',
+		backgroundColor: '#F5F4F6',
+		'&$cssFocused $notchedOutline': {
+			border: '1px solid #DEDCE1 !important',
 		},
+		'&$cssFocused': {
+			backgroundColor: '#EBEAED',
+		},
+		font: 'normal normal normal 20px/25px Source Sans Pro',
+		letterSpacing: '0px',
+	},
+
+	cssFocused: {},
+
+	notchedOutline: {
+		borderWidth: '1px',
+		borderColor: '#EBEAED !important',
 	},
 }))
 export default function CardListTool() {
@@ -74,30 +68,44 @@ export default function CardListTool() {
 	const [filterValue, setFilterValue] = useState('')
 	return (
 		<>
-			<Grid container justify='center' spacing={3}>
-				<Box justifyContent='flex-start' margin={3} flexShrink={1}>
-					{/*  */}
-					<div className={classes.search}>
-						<div className={classes.searchIcon}>
-							<SearchIcon />
-						</div>
-						<InputBase
-							placeholder='Search…'
-							classes={{
-								root: classes.inputRoot,
-								input: classes.inputInput,
+			<Grid container justify='center'>
+				<Box justifyContent='flex-start' flexShrink={1}>
+					<FormControl className={classes.marginLeft} variant='outlined'>
+						<TextField
+							variant='outlined'
+							placeholder='Search...'
+							type='search'
+							InputProps={{
+								'aria-label': 'search...',
+								startAdornment: (
+									<InputAdornment position='start'>
+										<img
+											src='/Icon-Search-2px.svg'
+											alt='image'
+											width='25'
+											height='25'
+										/>
+									</InputAdornment>
+								),
+								classes: {
+									root: classes.cssOutlinedInput,
+									focused: classes.cssFocused,
+									notchedOutline: classes.notchedOutline,
+								},
 							}}
 							value={filterValue}
 							onChange={(event) => {
 								setFilterValue(event.target.value)
 							}}
-							inputProps={{ 'aria-label': 'search' }}
 						/>
-					</div>
-					{/*  */}
+					</FormControl>
 				</Box>
-				<Box flexGrow={1} justifyContent='flex-start' margin={3} flexShrink={1}>
-					{/*  */}
+				<Box
+					flexGrow={1}
+					justifyContent='flex-start'
+					flexShrink={1}
+					className={classes.marginLeft}
+				>
 					<FormControlLabel
 						control={
 							<Checkbox
@@ -112,13 +120,15 @@ export default function CardListTool() {
 						}
 						label='Search in tags only'
 					/>
-					{/*  */}
 				</Box>
-				<Box justifyContent='flex-end' flexShrink={1} margin={3}>
-					{/*  */}
-					{/* <ButtonDialog /> */}
-					<AddToolDialog />
-					{/*  */}
+				<Box
+					justifyContent='flex-end'
+					flexShrink={1}
+					className={`${classes.marginRight} ${classes.miniPadding}`}
+				>
+					<ToolStateErrorsProvider>
+						<AddToolDialog />
+					</ToolStateErrorsProvider>
 				</Box>
 			</Grid>
 			{onlyTags ? (

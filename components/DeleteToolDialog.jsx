@@ -1,28 +1,48 @@
 import { useState } from 'react'
-import Button from '@material-ui/core/Button'
-import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import Typography from '@material-ui/core/Typography'
-import DialogContent from '@material-ui/core/DialogContent'
-import MuiDialogTitle from '@material-ui/core/DialogTitle'
-import { makeStyles, createMuiTheme } from '@material-ui/core/styles'
-import IconButton from '@material-ui/core/IconButton'
-import CloseIcon from '@material-ui/icons/Close'
-import Snackbar from '@material-ui/core/Snackbar'
+import { makeStyles } from '@material-ui/core/styles'
 import { useToolList } from '../context/ToolList'
+import useGlobalStyles from '../styles/global'
 import axios from 'axios'
+
+import {
+	Button,
+	Dialog,
+	DialogActions,
+	Typography,
+	DialogContent,
+	IconButton,
+	Snackbar,
+} from '@material-ui/core'
+
+import MuiDialogTitle from '@material-ui/core/DialogTitle'
+
 const useStyles = makeStyles((theme) => ({
+	closeIcon: {
+		width: '15px',
+		height: '15px',
+	},
 	closeButton: {
 		position: 'absolute',
 		right: theme.spacing(1),
 		top: theme.spacing(1),
 		color: theme.palette.grey[500],
+		margin: '0.7rem 0.5rem 1rem 1rem',
+	},
+	removeButtonMargin: {
+		margin: '0px 8px 0px 0px',
+	},
+
+	actionMargin: {
+		margin: '1rem 1rem 1rem 1rem',
+	},
+	actionMarginRight: {
+		marginRight: '1rem',
 	},
 }))
-const theme = createMuiTheme({})
 
 export default function DeleteToolDialog(props) {
 	const classes = useStyles()
+	const globalClasses = useGlobalStyles()
 	const { toolList, setToolList } = useToolList()
 	const [openToast, setOpenToast] = useState(false)
 	const [messageToast, setMessageToast] = useState('')
@@ -46,8 +66,6 @@ export default function DeleteToolDialog(props) {
 					const indexToRemove = newToolList.findIndex(
 						(elem) => elem.id === props.deleteToolId
 					)
-					//setOpenToast(true) splice remove action of snackbar...
-					//setMessageToast('Tool removed!')
 					newToolList.splice(indexToRemove, 1)
 					setToolList(newToolList)
 				})
@@ -67,17 +85,24 @@ export default function DeleteToolDialog(props) {
 	return (
 		<>
 			<Button
-				color='secondary'
-				startIcon={<CloseIcon />}
+				color='default'
+				startIcon={
+					<img
+						src='/Icon-Close-2pxRed.svg'
+						alt='image'
+						className={classes.closeIcon}
+					/>
+					// <CloseIcon className={globalClasses.dangerColorButtonText} />
+				}
 				onClick={handleClickOpen}
 			>
-				Remove
+				<Typography
+					className={`${globalClasses.dangerColorButtonText} ${classes.removeButtonMargin}`}
+				>
+					Remove
+				</Typography>
 			</Button>
-			<Dialog
-				onClose={handleClose}
-				aria-labelledby='customized-dialog-title'
-				open={open}
-			>
+			<Dialog onClose={handleClose} aria-labelledby='remove-tool' open={open}>
 				<MuiDialogTitle disableTypography>
 					<Typography variant='h6'>Remove tool</Typography>
 					<IconButton
@@ -85,20 +110,27 @@ export default function DeleteToolDialog(props) {
 						className={classes.closeButton}
 						onClick={handleClose}
 					>
-						<CloseIcon />
+						<img
+							src='/Icon-Close-2px.svg'
+							alt='image'
+							className={classes.closeIcon}
+						/>
 					</IconButton>
 				</MuiDialogTitle>
-				<DialogContent dividers>
+				<DialogContent>
 					<Typography>Are you sure you want to remove that tool?</Typography>
 				</DialogContent>
-				<DialogActions>
+				<DialogActions className={classes.actionMargin}>
 					<Button
 						onClick={(event) => handleCancel(event)}
-						color='default'
+						color='primary'
+						className={classes.actionMarginRight}
 						autoFocus
 						variant='contained'
 					>
-						Cancel
+						<Typography className={globalClasses.defaultColorButtonText}>
+							Cancel
+						</Typography>
 					</Button>
 					<Button
 						onClick={(event) => handleDelete(event, props)}
@@ -106,7 +138,9 @@ export default function DeleteToolDialog(props) {
 						autoFocus
 						variant='contained'
 					>
-						Yes, remove
+						<Typography className={globalClasses.defaultColorButtonText}>
+							Yes, Remove
+						</Typography>
 					</Button>
 				</DialogActions>
 			</Dialog>

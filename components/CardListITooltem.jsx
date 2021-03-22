@@ -1,36 +1,40 @@
 import React from 'react'
 import DeleteToolDialog from '../components/DeleteToolDialog'
-import Typography from '@material-ui/core/Typography'
-import Card from '@material-ui/core/Card'
-import CardHeader from '@material-ui/core/CardHeader'
-import CardContent from '@material-ui/core/CardContent'
-import { Button, Box, Link } from '@material-ui/core'
+import useGlobalStyles from '../styles/global'
 import { makeStyles } from '@material-ui/core/styles'
+
+import {
+	Typography,
+	Card,
+	CardHeader,
+	CardContent,
+	Button,
+	Box,
+	Link,
+} from '@material-ui/core'
+
 const useStyles = makeStyles((theme) => ({
 	root: {
 		'& > * + *': {
 			marginLeft: theme.spacing(2),
 		},
 	},
-	linkTitle: {
-		fontWeight: '600',
-		fontSize: '1.5rem',
-	},
 	cardMargin: {
 		margin: '1rem',
-		backgroundColor: theme.palette.background.darker,
+		backgroundColor: theme.palette.background.default,
 	},
 }))
 export default function CardListITooltem(props) {
 	const classes = useStyles()
+	const globalClasses = useGlobalStyles()
 	const preventDefault = (event) => event.preventDefault()
 
 	return (
 		<Card key={props.item.id} className={classes.cardMargin}>
 			<CardHeader
 				title={
-					<Button href={props.item.link} className={classes.linkTitle}>
-						{props.item.title}
+					<Button href={props.item.link}>
+						<Typography variant='h5'>{props.item.title}</Typography>
 					</Button>
 				}
 				action={
@@ -40,8 +44,8 @@ export default function CardListITooltem(props) {
 					/>
 				}
 			></CardHeader>
-			<CardContent>
-				<Typography variant='body1' color='textSecondary' component='p'>
+			<CardContent className={globalClasses.largePaddingLeft}>
+				<Typography variant='body2' component='p'>
 					{props.item.description}
 				</Typography>
 				<Box margin={2}></Box>
@@ -50,6 +54,7 @@ export default function CardListITooltem(props) {
 						key={key}
 						component='button'
 						variant='body2'
+						className={globalClasses.paddingRight}
 						onClick={preventDefault}
 					>
 						#{tag}{' '}

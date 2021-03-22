@@ -1,6 +1,7 @@
 ## VUTTR - Very Useful Tools to Remember
 
-![image](https://user-images.githubusercontent.com/27932424/111696812-814d1200-8813-11eb-8b43-0f9607b93cfe.png)
+![image](https://user-images.githubusercontent.com/27932424/111939785-ede23e00-8aab-11eb-8606-7b3fefffbd99.png)
+
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 

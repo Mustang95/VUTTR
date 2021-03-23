@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import 'bootstrap/dist/css/bootstrap.min.css'
 import Head from 'next/head'
 import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'

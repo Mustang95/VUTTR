@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
 
 import useAPI from '../hooks/useAPI'
 import CardListITooltem from './CardListITooltem'
@@ -7,51 +6,7 @@ import AddToolDialog from './AddToolDialog'
 import { useToolList } from '../context/ToolList'
 import ToolStateErrorsProvider from '../context/ToolStateErrors'
 
-import {
-	Grid,
-	FormControlLabel,
-	Checkbox,
-	Box,
-	FormControl,
-	TextField,
-	InputAdornment,
-} from '@material-ui/core'
-
-const useStyles = makeStyles((theme) => ({
-	root: {
-		backgroundColor: theme.palette.background.default.main,
-	},
-	marginRight: {
-		marginRight: '1rem',
-	},
-	miniPadding: {
-		padding: '5px 0px 0px 5px',
-	},
-	marginLeft: {
-		marginLeft: '1rem',
-	},
-	cssOutlinedInput: {
-		color: 'secondary',
-		backgroundColor: '#F5F4F6',
-		'&$cssFocused $notchedOutline': {
-			border: '1px solid #DEDCE1 !important',
-		},
-		'&$cssFocused': {
-			backgroundColor: '#EBEAED',
-		},
-		font: 'normal normal normal 20px/25px Source Sans Pro',
-		letterSpacing: '0px',
-	},
-
-	cssFocused: {},
-
-	notchedOutline: {
-		borderWidth: '1px',
-		borderColor: '#EBEAED !important',
-	},
-}))
 export default function CardListTool() {
-	const classes = useStyles()
 	const { response, setResponse } = useAPI()
 	const { toolList, setToolList } = useToolList()
 	useEffect(() => {
@@ -68,69 +23,33 @@ export default function CardListTool() {
 	const [filterValue, setFilterValue] = useState('')
 	return (
 		<>
-			<Grid container justify='center'>
-				<Box justifyContent='flex-start' flexShrink={1}>
-					<FormControl className={classes.marginLeft} variant='outlined'>
-						<TextField
-							variant='outlined'
-							placeholder='Search...'
-							type='search'
-							InputProps={{
-								'aria-label': 'search...',
-								startAdornment: (
-									<InputAdornment position='start'>
-										<img
-											src='/Icon-Search-2px.svg'
-											alt='image'
-											width='25'
-											height='25'
-										/>
-									</InputAdornment>
-								),
-								classes: {
-									root: classes.cssOutlinedInput,
-									focused: classes.cssFocused,
-									notchedOutline: classes.notchedOutline,
-								},
-							}}
-							value={filterValue}
-							onChange={(event) => {
-								setFilterValue(event.target.value)
-							}}
-						/>
-					</FormControl>
-				</Box>
-				<Box
-					flexGrow={1}
-					justifyContent='flex-start'
-					flexShrink={1}
-					className={classes.marginLeft}
-				>
-					<FormControlLabel
-						control={
-							<Checkbox
-								value={onlyTags}
-								checked={onlyTags}
-								onClick={(event) => {
-									setOnlyTags(event.target.checked)
-								}}
-								color='primary'
-								name='tag'
-							/>
-						}
+			<div container justify='center'>
+				<div justifyContent='flex-start' flexShrink={1}>
+					<input
+						placeholder='Search...'
+						type='search'
+						value={filterValue}
+						onChange={(event) => {
+							setFilterValue(event.target.value)
+						}}
+					/>
+				</div>
+				<div flexGrow={1} justifyContent='flex-start' flexShrink={1}>
+					<input
+						value={onlyTags}
+						checked={onlyTags}
+						onClick={(event) => {
+							setOnlyTags(event.target.checked)
+						}}
 						label='Search in tags only'
 					/>
-				</Box>
-				<Box
-					justifyContent='flex-end'
-					flexShrink={1}
-					className={`${classes.marginRight} ${classes.miniPadding}`}
-				>
+				</div>
+				<div justifyContent='flex-end' flexShrink={1}>
 					<ToolStateErrorsProvider>
 						<AddToolDialog />
 					</ToolStateErrorsProvider>
-				</Box>
-			</Grid>
+				</div>
+			</div>
 			{onlyTags ? (
 				<>
 					{toolList

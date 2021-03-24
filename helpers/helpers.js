@@ -1,5 +1,4 @@
 export const generateId = (response) => {
-	debugger
 	const tools = response?.sort((a, b) => {
 		return a.id - b.id
 	})

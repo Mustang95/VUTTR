@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import Head from 'next/head'
 import ToolDataProvider from '../context/ToolData'
 import ToolListProvider from '../context/ToolList'
+import { theme } from '../src/theme'
+import { ThemeProvider } from 'styled-components'
 
 export default function MyApp(props) {
 	const { Component, pageProps } = props
@@ -24,15 +26,17 @@ export default function MyApp(props) {
 					content='minimum-scale=1, initial-scale=1, width=device-width'
 				/>
 			</Head>
-			<div suppressHydrationWarning>
-				{typeof window === 'undefined' ? null : (
-					<ToolListProvider>
-						<ToolDataProvider>
-							<Component {...pageProps} />
-						</ToolDataProvider>
-					</ToolListProvider>
-				)}
-			</div>
+			<ThemeProvider theme={theme}>
+				<div suppressHydrationWarning>
+					{typeof window === 'undefined' ? null : (
+						<ToolListProvider>
+							<ToolDataProvider>
+								<Component {...pageProps} />
+							</ToolDataProvider>
+						</ToolListProvider>
+					)}
+				</div>
+			</ThemeProvider>
 		</React.Fragment>
 	)
 }

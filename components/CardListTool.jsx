@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 
 import useAPI from '../hooks/useAPI'
 import CardListITooltem from './CardListITooltem'
-import AddToolDialog from './AddToolDialog'
+import AddToolDialog from './AddToolDialog/AddToolDialog'
 import { useToolList } from '../context/ToolList'
 import ToolStateErrorsProvider from '../context/ToolStateErrors'
 

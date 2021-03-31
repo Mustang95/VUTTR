@@ -1,17 +1,18 @@
 import { useState } from 'react'
-import { useToolData } from '../context/ToolData'
-import { generateId } from '../helpers/helpers'
-import { useToolList } from '../context/ToolList'
-import FormTool from '../components/FormTool'
+import { generateId } from '../../helpers/helpers'
+import { useToolData } from '../../context/ToolData'
+import { useToolList } from '../../context/ToolList'
+import { useToolStateHandlingErrors } from '../../context/ToolStateErrors'
+import { Button } from './style'
+import FormTool from '../FormTool'
 import axios from 'axios'
-
-import { useToolStateHandlingErrors } from '../context/ToolStateErrors'
 
 export default function AddToolDialog() {
 	const [open, setOpen] = useState(false)
 	const { toolStateErrors, setToolStateErrors } = useToolStateHandlingErrors()
 
 	const handleClickOpen = () => {
+		console.log('aaaa')
 		setOpen(!open)
 	}
 	const [openToast, setOpenToast] = useState(false)
@@ -106,6 +107,7 @@ export default function AddToolDialog() {
 			<button onClick={handleClickOpen}>
 				<a>Add</a>
 			</button>
+			<Button color='primaryNeutral' size='normal' onClick={handleClickOpen} />
 			<div
 				onClose={handleClose}
 				aria-labelledby='customized-dialog-title'

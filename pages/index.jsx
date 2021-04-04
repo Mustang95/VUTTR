@@ -1,6 +1,6 @@
 import Head from 'next/head'
-import AppAppBar from '../components/AppAppBar'
-import CardListTool from '../components/CardListTool'
+import AppBar from '../components/AppBar/AppBar'
+import CardListTool from '../components/List/CardListTool'
 
 export default function Home() {
 	return (
@@ -10,7 +10,7 @@ export default function Home() {
 			</Head>
 			<div container justify='center'>
 				<div item xs={12} sm={11} xl={8}>
-					<AppAppBar />
+					<AppBar />
 					<CardListTool />
 				</div>
 			</div>

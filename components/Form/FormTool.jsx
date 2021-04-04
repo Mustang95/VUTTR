@@ -1,6 +1,7 @@
-import { useToolData } from '../context/ToolData.jsx'
+import { useToolData } from '../../context/ToolData.jsx'
 import { useEffect, useState } from 'react'
-import { useToolStateHandlingErrors } from '../context/ToolStateErrors.jsx'
+import { useToolStateHandlingErrors } from '../../context/ToolStateErrors.jsx'
+import { Input, Label, TextArea } from './style.jsx'
 
 export default function FormTool(props) {
 	const { toolData, setToolData } = useToolData()
@@ -94,10 +95,12 @@ export default function FormTool(props) {
 	}, [errorTitle, errorLink, errorDesc, toolData]) //errorTitle, errorLink, errorDesc
 	console.log(errorTitle)
 	return (
-		<div>
+		<>
 			<form onSubmit={handleChange}>
-				<a>Tool name</a>
-				<input
+				<Label variant='body' for='title'>
+					Tool name
+				</Label>
+				<Input
 					id='title'
 					required
 					error={toolStateErrors.errorTitle}
@@ -106,8 +109,8 @@ export default function FormTool(props) {
 					onChange={handleChange('title')}
 				/>
 
-				<a>Tool Link</a>
-				<input
+				<Label variant='body'>Tool Link</Label>
+				<Input
 					id='link'
 					required
 					error={toolStateErrors.errorLink}
@@ -116,8 +119,8 @@ export default function FormTool(props) {
 					onChange={handleChange('link')}
 				/>
 
-				<a>Tool Description</a>
-				<input
+				<Label variant='body'>Tool Description</Label>
+				<TextArea
 					id='description'
 					required
 					error={toolStateErrors.errorDescription}
@@ -131,8 +134,8 @@ export default function FormTool(props) {
 					onChange={handleChange('description')}
 				/>
 
-				<a>Tags</a>
-				<input
+				<Label variant='body'>Tags</Label>
+				<Input
 					id='tags'
 					placeholder='Optional...'
 					value={toolData.tags}
@@ -150,6 +153,6 @@ export default function FormTool(props) {
 				onClose={handleClose}
 				message={messageToast}
 			/>
-		</div>
+		</>
 	)
 }

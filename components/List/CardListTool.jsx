@@ -1,10 +1,20 @@
 import { useState, useEffect } from 'react'
 
-import useAPI from '../hooks/useAPI'
-import CardListITooltem from './CardListITooltem'
-import AddToolDialog from './AddToolDialog/AddToolDialog'
-import { useToolList } from '../context/ToolList'
-import ToolStateErrorsProvider from '../context/ToolStateErrors'
+import useAPI from '../../hooks/useAPI'
+import CardListITooltem from '../CardListITooltem'
+import AddToolDialog from '../AddToolDialog/AddToolDialog'
+import { useToolList } from '../../context/ToolList'
+import ToolStateErrorsProvider from '../../context/ToolStateErrors'
+import {
+	Grid,
+	GridItem,
+	Input,
+	Switch,
+	Label,
+	LabelSwitch,
+	Slider,
+	Typography,
+} from './style'
 
 export default function CardListTool() {
 	const { response, setResponse } = useAPI()
@@ -23,9 +33,9 @@ export default function CardListTool() {
 	const [filterValue, setFilterValue] = useState('')
 	return (
 		<>
-			<div container justify='center'>
-				<div justifyContent='flex-start' flexShrink={1}>
-					<input
+			<Grid>
+				<GridItem>
+					<Input
 						placeholder='Search...'
 						type='search'
 						value={filterValue}
@@ -33,23 +43,30 @@ export default function CardListTool() {
 							setFilterValue(event.target.value)
 						}}
 					/>
-				</div>
-				<div flexGrow={1} justifyContent='flex-start' flexShrink={1}>
-					<input
-						value={onlyTags}
-						checked={onlyTags}
-						onClick={(event) => {
-							setOnlyTags(event.target.checked)
-						}}
-						label='Search in tags only'
-					/>
-				</div>
-				<div justifyContent='flex-end' flexShrink={1}>
+				</GridItem>
+				<GridItem>
+					<LabelSwitch for='switch'>
+						<Switch
+							id='switch'
+							type='checkbox'
+							value={onlyTags}
+							checked={onlyTags}
+							onClick={(event) => {
+								setOnlyTags(event.target.checked)
+							}}
+						/>
+						<Slider />
+					</LabelSwitch>
+					<Label for='switch'>
+						<Typography variant='body'>Search in tags only</Typography>
+					</Label>
+				</GridItem>
+				<GridItem end>
 					<ToolStateErrorsProvider>
 						<AddToolDialog />
 					</ToolStateErrorsProvider>
-				</div>
-			</div>
+				</GridItem>
+			</Grid>
 			{onlyTags ? (
 				<>
 					{toolList

@@ -5,6 +5,7 @@ import ToolDataProvider from '../context/ToolData'
 import ToolListProvider from '../context/ToolList'
 import { theme } from '../src/theme'
 import { ThemeProvider } from 'styled-components'
+import GlobalStyle from '../style/GlobalStyle'
 
 export default function MyApp(props) {
 	const { Component, pageProps } = props
@@ -26,6 +27,7 @@ export default function MyApp(props) {
 					content='minimum-scale=1, initial-scale=1, width=device-width'
 				/>
 			</Head>
+			<GlobalStyle />
 			<ThemeProvider theme={theme}>
 				<div suppressHydrationWarning>
 					{typeof window === 'undefined' ? null : (

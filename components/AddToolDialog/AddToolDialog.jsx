@@ -3,27 +3,29 @@ import { generateId } from '../../helpers/helpers'
 import { useToolData } from '../../context/ToolData'
 import { useToolList } from '../../context/ToolList'
 import { useToolStateHandlingErrors } from '../../context/ToolStateErrors'
-import { Button } from './style'
-import FormTool from '../FormTool'
+import { Button, Typography, Modal, Header, ButtonClose, Grid } from './style'
+import FormTool from '../Form/FormTool'
 import axios from 'axios'
 
 export default function AddToolDialog() {
 	const [open, setOpen] = useState(false)
 	const { toolStateErrors, setToolStateErrors } = useToolStateHandlingErrors()
 
-	const handleClickOpen = () => {
-		console.log('aaaa')
-		setOpen(!open)
-	}
 	const [openToast, setOpenToast] = useState(false)
 	const [messageToast, setMessageToast] = useState('')
 	const { toolData, setToolData } = useToolData()
 	const { toolList, setToolList } = useToolList()
+
 	const handleClose = () => {
 		setOpen(false)
 	}
+
 	const handleCloseToast = () => {
 		setOpenToast(false)
+	}
+
+	const handleClickOpen = () => {
+		setOpen(!open)
 	}
 
 	const hasInvalidFields = {
@@ -104,38 +106,54 @@ export default function AddToolDialog() {
 
 	return (
 		<>
-			<button onClick={handleClickOpen}>
-				<a>Add</a>
-			</button>
-			<Button color='primaryNeutral' size='normal' onClick={handleClickOpen} />
-			<div
-				onClose={handleClose}
-				aria-labelledby='customized-dialog-title'
-				open={open}
+			<Button
+				color='primaryNeutral'
+				size='normal'
+				lessMargin
+				onClick={handleClickOpen}
 			>
-				<div disableTypography>
-					<a variant='h6'>Add new tool</a>
-					<button aria-label='close' onClick={handleClose}>
-						<img src='/Icon-Close-2px.svg' alt='image' />
-					</button>
-				</div>
-				<div>
-					<FormTool
-						requiredFields={hasInvalidFields.fields}
-						onChange={hasInvalidFields.fields}
-					/>
-				</div>
-				<div>
-					<button
-						onClick={handleChange}
-						color='primary'
-						autoFocus
-						variant='contained'
-					>
-						Add tool
-					</button>
-				</div>
-			</div>
+				Add
+			</Button>
+			{open ? (
+				<Modal
+					onClose={handleClose}
+					aria-labelledby='customized-dialog-title'
+					open={open}
+				>
+					<Header>
+						<div>icon plus</div>
+						<Typography variant='h4'>Add new tool</Typography>
+						<ButtonClose
+							color='primaryDanger'
+							size='small'
+							aria-label='close'
+							onClick={handleClose}
+						>
+							<img
+								src='/Icon-Close-2px.svg'
+								alt='close'
+								height='12'
+								width='12'
+							/>
+						</ButtonClose>
+					</Header>
+					<Grid>
+						<FormTool
+							requiredFields={hasInvalidFields.fields}
+							onChange={hasInvalidFields.fields}
+						/>
+					</Grid>
+					<div>
+						<Button
+							onClick={handleChange}
+							color='primaryNeutral'
+							size='normalModal'
+						>
+							Add tool
+						</Button>
+					</div>
+				</Modal>
+			) : null}
 			<div
 				open={openToast}
 				anchorOrigin={{

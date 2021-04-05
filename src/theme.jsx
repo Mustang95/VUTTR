@@ -40,6 +40,8 @@ export const theme = {
 		primaryNeutralHover: '#2F55CC 0% 0% no-repeat padding-box',
 		primaryNeutralClick: '#244AA8 0% 0% no-repeat padding-box',
 		primaryNeutralDisable: '#B9C6FA 0% 0% no-repeat padding-box',
+		primaryNeutralText: '#FFFFFF',
+
 		//
 		primarySuccess: '#0DCB7D 0% 0% no-repeat padding-box',
 		primarySuccess: '#0DCB7D 0% 0% no-repeat padding-box',
@@ -47,14 +49,16 @@ export const theme = {
 		primarySuccess: '#0DCB7D 0% 0% no-repeat padding-box',
 		//
 		primaryDanger: '#F95E5A 0% 0% no-repeat padding-box',
-		primaryDanger: '#F95E5A 0% 0% no-repeat padding-box',
-		primaryDanger: '#F95E5A 0% 0% no-repeat padding-box',
-		primaryDanger: '#F95E5A 0% 0% no-repeat padding-box',
+		primaryDangerHover: '#CC4C4C 0% 0% no-repeat padding-box',
+		primaryDangerClick: '#A53F3F 0% 0% no-repeat padding-box',
+		primaryDangerDisable: '#FCAEAC 0% 0% no-repeat padding-box',
+		primaryDangerText: '#FFFFFF',
 		//
 		secondaryNeutral: '#E1E7FD 0% 0% no-repeat padding-box',
-		secondaryNeutral: '#E1E7FD 0% 0% no-repeat padding-box',
-		secondaryNeutral: '#E1E7FD 0% 0% no-repeat padding-box',
-		secondaryNeutral: '#E1E7FD 0% 0% no-repeat padding-box',
+		secondaryNeutralHover: '#CAD6FC 0% 0% no-repeat padding-box',
+		secondaryNeutralClick: '#B9C6FA 0% 0% no-repeat padding-box',
+		secondaryNeutralDisable: '#E1E7FD 0% 0% no-repeat padding-box',
+		secondaryNeutralText: '#365DF0',
 		//
 		secondarySuccess: '#E7FBF3 0% 0% no-repeat padding-box',
 		secondarySuccess: '#E7FBF3 0% 0% no-repeat padding-box',

@@ -3,7 +3,11 @@ export const Grid = styled.div`
 	margin: 1rem;
 	flex: 1;
 	display: grid;
-	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-columns: ${(props) =>
+		/* props.columns === 2 ? '1fr 1fr' : '1fr'}; */
+		props.columns === 3 ? '1fr 1fr 1fr' : '1fr'}; //melhorar
+	/* props.columns === 4 ? '1fr 1fr 1fr 1fr' : '1fr'}; */
+	/* props.columns === 5 ? '1fr 1fr 1fr 1fr 1fr' : '1fr'}; */
 	grid-auto-columns: min-content;
 
 	@media (max-width: 1280px) {
@@ -39,6 +43,13 @@ export const GridItem = styled(Grid)`
 	display: flex;
 	align-items: center;
 	justify-content: ${(props) => (props.end ? 'flex-end' : 'flex-start')};
+`
+export const List = styled.div`
+	/* margin: 1rem; */
+	flex: 1;
+	display: grid;
+	grid-template-columns: 1fr; //melhorar
+	grid-auto-columns: min-content;
 `
 export const Typography = styled.p`
 	font: ${(props) => props.theme.typography[props.variant].font};

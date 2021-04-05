@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { useToolList } from '../context/ToolList'
+import { useToolList } from '../../context/ToolList'
 import axios from 'axios'
-
+import { ButtonClose, Button, Modal, Title, Actions, Typography } from './style'
 export default function DeleteToolDialog(props) {
 	const { toolList, setToolList } = useToolList()
 	const [openToast, setOpenToast] = useState(false)
@@ -44,39 +44,55 @@ export default function DeleteToolDialog(props) {
 
 	return (
 		<>
-			<button color='default' onClick={handleClickOpen}>
-				<img src='/Icon-Close-2pxRed.svg' alt='image' />
-				<a>Remove</a>
-			</button>
-			<div onClose={handleClose} aria-labelledby='remove-tool' open={open}>
-				<div>
-					<a variant='h6'>Remove tool</a>
-					<button aria-label='close' onClick={handleClose}>
-						<img src='/Icon-Close-2px.svg' alt='image' />
-					</button>
-				</div>
-				<div>
-					<a>Are you sure you want to remove that tool?</a>
-				</div>
-				<div>
-					<button
-						onClick={(event) => handleCancel(event)}
-						color='primary'
-						autoFocus
-						variant='contained'
-					>
-						<a>Cancel</a>
-					</button>
-					<button
-						onClick={(event) => handleDelete(event, props)}
-						color='secondary'
-						autoFocus
-						variant='contained'
-					>
-						<a>Yes, Remove</a>
-					</button>
-				</div>
-			</div>
+			<ButtonClose
+				color='primaryDanger'
+				size='small'
+				LargeMarginTop
+				onClick={handleClickOpen}
+			>
+				<img src='/Icon-Delete-2pxRed.svg' alt='close' height='25' width='25' />
+				<Typography variant='bodySmall' normalPaddingLeft>
+					Remove
+				</Typography>
+			</ButtonClose>
+			{open ? (
+				<Modal onClose={handleClose} open={open}>
+					<Title>
+						<Typography variant='h4'>Remove tool</Typography>
+						<ButtonClose onClick={handleClose}>
+							<img
+								src='/Icon-Close-2px.svg'
+								alt='image'
+								height='12'
+								width='12'
+							/>
+						</ButtonClose>
+					</Title>
+					<div>
+						<Typography variant='body' normalMargin>
+							Are you sure you want to remove that tool?
+						</Typography>
+					</div>
+					<Actions>
+						<div></div>
+						<div></div>
+						<Button
+							onClick={(event) => handleCancel(event)}
+							color='secondaryNeutral'
+							size='normal'
+						>
+							Cancel
+						</Button>
+						<Button
+							onClick={(event) => handleDelete(event, props)}
+							color='primaryDanger'
+							size='normal'
+						>
+							Yes, Remove
+						</Button>
+					</Actions>
+				</Modal>
+			) : null}
 			<div
 				open={openToast}
 				anchorOrigin={{

@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react'
 
 import useAPI from '../../hooks/useAPI'
-import CardListITooltem from '../CardListITooltem'
+import CardListITooltem from '../ListItem/CardListITooltem'
 import AddToolDialog from '../AddToolDialog/AddToolDialog'
 import { useToolList } from '../../context/ToolList'
 import ToolStateErrorsProvider from '../../context/ToolStateErrors'
 import {
 	Grid,
 	GridItem,
+	List,
 	Input,
 	Switch,
 	Label,
@@ -33,7 +34,7 @@ export default function CardListTool() {
 	const [filterValue, setFilterValue] = useState('')
 	return (
 		<>
-			<Grid>
+			<Grid columns={3}>
 				<GridItem>
 					<Input
 						placeholder='Search...'
@@ -67,41 +68,45 @@ export default function CardListTool() {
 					</ToolStateErrorsProvider>
 				</GridItem>
 			</Grid>
-			{onlyTags ? (
-				<>
-					{toolList
-						?.filter((tag) => {
-							for (let i = 0; i < tag.tags.length; i++) {
-								if (filterValue === '') {
-									return tag
-								} else if (
-									tag.tags[i].toLowerCase().includes(filterValue.toLowerCase())
-								) {
-									return tag
+			<List columns={1}>
+				{onlyTags ? (
+					<>
+						{toolList
+							?.filter((tag) => {
+								for (let i = 0; i < tag.tags.length; i++) {
+									if (filterValue === '') {
+										return tag
+									} else if (
+										tag.tags[i]
+											.toLowerCase()
+											.includes(filterValue.toLowerCase())
+									) {
+										return tag
+									}
 								}
-							}
-						})
-						.map((item) => (
-							<CardListITooltem item={item} key={item.id} />
-						))}
-				</>
-			) : (
-				<>
-					{toolList
-						?.filter((val) => {
-							if (filterValue === '') {
-								return val
-							} else if (
-								val.title.toLowerCase().includes(filterValue.toLowerCase())
-							) {
-								return val
-							}
-						})
-						.map((item) => (
-							<CardListITooltem item={item} key={item.id} />
-						))}
-				</>
-			)}
+							})
+							.map((item) => (
+								<CardListITooltem item={item} key={item.id} />
+							))}
+					</>
+				) : (
+					<>
+						{toolList
+							?.filter((val) => {
+								if (filterValue === '') {
+									return val
+								} else if (
+									val.title.toLowerCase().includes(filterValue.toLowerCase())
+								) {
+									return val
+								}
+							})
+							.map((item) => (
+								<CardListITooltem item={item} key={item.id} />
+							))}
+					</>
+				)}
+			</List>
 		</>
 	)
 }

@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+
 export const ButtonClose = styled.button`
 	background: transparent 0% 0% no-repeat padding-box;
 
@@ -6,11 +7,12 @@ export const ButtonClose = styled.button`
 	height: 0.75rem;
 
 	margin-right: 1.188rem;
-	margin-top: 1.25rem;
+	margin-top: ${(props) => (props.LargeMarginTop ? '2.25rem' : '1.25rem')};
 
 	display: flex;
 	align-items: center;
-	justify-content: center;
+	justify-content: flex-end;
+	justify-self: flex-end;
 
 	border-style: none;
 	:focus {
@@ -19,6 +21,8 @@ export const ButtonClose = styled.button`
 `
 export const Button = styled.button`
 	margin: ${(props) => (props.lessMargin ? '0' : '1rem')};
+
+	color: ${(props) => props.theme.buttons[props.color + 'Text']};
 
 	/* if you want any change globally pls use GlobalStyle.jsx */
 	width: ${(props) => props.theme.buttonSize[props.size].width};
@@ -32,23 +36,9 @@ export const Button = styled.button`
 		background: ${(props) => props.theme.buttons[props.color + 'Click']};
 	}
 `
-
-export const Typography = styled.h4`
-	display: flex;
-	align-items: center;
-	justify-content: flex-start;
-	margin-left: 0.125rem;
-
-	font: ${(props) => props.theme.typography[props.variant].font};
-	letter-spacing: ${(props) =>
-		props.theme.typography[props.variant].letterSpacing};
-	color: ${(props) => props.theme.typography.color};
-	opacity: ${(props) => props.theme.typography.opacity};
-`
-
 export const Modal = styled.div`
 	width: 35.625rem; //rem
-	height: 30rem; //rem
+	height: 15rem; //rem
 
 	background: #ffffff 0% 0% no-repeat padding-box;
 	box-shadow: 0px 1.25rem 1.563rem #0000001a;
@@ -66,14 +56,31 @@ export const Modal = styled.div`
 
 	z-index: 300;
 `
-export const Header = styled.div`
-	flex: 1;
-	display: grid;
-	grid-template-columns: 1fr 10fr 1fr;
-`
-export const Grid = styled.div`
+export const Title = styled.div`
 	margin: 1rem;
 	flex: 1;
 	display: grid;
+	grid-template-columns: 1fr 1fr;
 	grid-auto-columns: min-content;
+`
+export const Actions = styled.div`
+	/* margin: 1rem; */
+	flex: 1;
+	display: grid;
+
+	justify-items: self-end;
+
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	grid-auto-columns: min-content;
+`
+export const Typography = styled.p`
+	padding-top: 0.5rem;
+	padding-left: ${(props) => (props.normalPaddingLeft ? '1rem' : '0')};
+	margin: ${(props) => (props.normalMargin ? '1rem' : '0')};
+
+	font: ${(props) => props.theme.typography[props.variant].font};
+	letter-spacing: ${(props) =>
+		props.theme.typography[props.variant].letterSpacing};
+	color: ${(props) => props.theme.typography.color};
+	opacity: ${(props) => props.theme.typography.opacity};
 `

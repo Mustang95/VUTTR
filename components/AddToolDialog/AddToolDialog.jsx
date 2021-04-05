@@ -115,11 +115,7 @@ export default function AddToolDialog() {
 				Add
 			</Button>
 			{open ? (
-				<Modal
-					onClose={handleClose}
-					aria-labelledby='customized-dialog-title'
-					open={open}
-				>
+				<Modal onClose={handleClose} open={open}>
 					<Header>
 						<div>icon plus</div>
 						<Typography variant='h4'>Add new tool</Typography>

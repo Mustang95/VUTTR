@@ -3,11 +3,7 @@ export const Grid = styled.div`
 	margin: 1rem;
 	flex: 1;
 	display: grid;
-	grid-template-columns: ${(props) =>
-		/* props.columns === 2 ? '1fr 1fr' : '1fr'}; */
-		props.columns === 3 ? '1fr 1fr 1fr' : '1fr'}; //melhorar
-	/* props.columns === 4 ? '1fr 1fr 1fr 1fr' : '1fr'}; */
-	/* props.columns === 5 ? '1fr 1fr 1fr 1fr 1fr' : '1fr'}; */
+	grid-template-columns: 1fr 1fr 1fr; //melhorar
 	grid-auto-columns: min-content;
 
 	@media (max-width: 1280px) {

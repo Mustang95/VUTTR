@@ -6,6 +6,7 @@ import ToolListProvider from '../context/ToolList'
 import { theme } from '../src/theme'
 import { ThemeProvider } from 'styled-components'
 import GlobalStyle from '../style/GlobalStyle'
+// import '../style/style'
 
 export default function MyApp(props) {
 	const { Component, pageProps } = props

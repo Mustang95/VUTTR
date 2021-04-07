@@ -11,7 +11,7 @@ export const Card = styled.div`
 	left: 0;
 	right: 0;
 	margin: 0rem 2rem 2rem 2rem;
-	height: 15.625rem; //15.625rem 250px
+	height: 12.625rem; //15.625rem 250px
 `
 export const Title = styled.div`
 	/* margin: 1rem; */
@@ -56,12 +56,21 @@ export const TitleAction = styled.button`
 	}
 `
 export const Content = styled.div`
+	margin: 0rem 1rem 0rem 1rem;
+`
+export const Spacer = styled.div`
 	margin: 1rem;
 `
+export const CardFooter = styled.div`
+	display: flex;
+	justify-content: flex-start;
+`
 export const Typography = styled.p`
+	margin-right: ${(props) => (props.lessMargin ? 0 : '1rem')};
 	font: ${(props) => props.theme.typography[props.variant].font};
 	letter-spacing: ${(props) =>
 		props.theme.typography[props.variant].letterSpacing};
 	color: ${(props) => props.theme.typography.color};
 	opacity: ${(props) => props.theme.typography.opacity};
 `
+export const Link = styled.link``

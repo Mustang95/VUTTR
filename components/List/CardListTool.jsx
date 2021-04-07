@@ -32,6 +32,7 @@ export default function CardListTool() {
 	}, [toolList])
 	const [onlyTags, setOnlyTags] = useState(false)
 	const [filterValue, setFilterValue] = useState('')
+	const end = true
 	return (
 		<>
 			<Grid columns={3}>
@@ -46,23 +47,23 @@ export default function CardListTool() {
 					/>
 				</GridItem>
 				<GridItem>
-					<LabelSwitch for='switch'>
+					<LabelSwitch htmlFor='switch'>
 						<Switch
 							id='switch'
 							type='checkbox'
 							value={onlyTags}
 							checked={onlyTags}
-							onClick={(event) => {
+							onChange={(event) => {
 								setOnlyTags(event.target.checked)
 							}}
 						/>
 						<Slider />
 					</LabelSwitch>
-					<Label for='switch'>
+					<Label htmlFor='switch'>
 						<Typography variant='body'>Search in tags only</Typography>
 					</Label>
 				</GridItem>
-				<GridItem end>
+				<GridItem end={end ? 1 : 0}>
 					<ToolStateErrorsProvider>
 						<AddToolDialog />
 					</ToolStateErrorsProvider>

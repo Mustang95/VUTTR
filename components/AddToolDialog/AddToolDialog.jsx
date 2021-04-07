@@ -3,7 +3,15 @@ import { generateId } from '../../helpers/helpers'
 import { useToolData } from '../../context/ToolData'
 import { useToolList } from '../../context/ToolList'
 import { useToolStateHandlingErrors } from '../../context/ToolStateErrors'
-import { Button, Typography, Modal, Header, ButtonClose, Grid } from './style'
+import {
+	Button,
+	Typography,
+	Modal,
+	Header,
+	ButtonClose,
+	Grid,
+	SnackBar,
+} from './style'
 import FormTool from '../Form/FormTool'
 import axios from 'axios'
 
@@ -150,7 +158,7 @@ export default function AddToolDialog() {
 					</div>
 				</Modal>
 			) : null}
-			<div
+			<SnackBar
 				open={openToast}
 				anchorOrigin={{
 					vertical: 'bottom',
@@ -159,7 +167,7 @@ export default function AddToolDialog() {
 				autoHideDuration={3000}
 				onClose={handleCloseToast}
 				message={messageToast}
-			></div>
+			/>
 		</>
 	)
 }

@@ -9,7 +9,9 @@
     "test": "jest"
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.3",
     "axios": "^0.21.1",
+    "material-ui-chip-input": "^2.0.0-beta.2",
     "next": "10.0.9",
     "react": "17.0.1",
     "react-dom": "17.0.1",

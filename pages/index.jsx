@@ -8,8 +8,8 @@ export default function Home() {
 			<Head>
 				<title> VUTTR </title>
 			</Head>
-			<div container justify='center'>
-				<div item xs={12} sm={11} xl={8}>
+			<div>
+				<div>
 					<AppBar />
 					<CardListTool />
 				</div>

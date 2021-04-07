@@ -1,10 +1,74 @@
 import { useToolData } from '../../context/ToolData.jsx'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Component } from 'react'
 import { useToolStateHandlingErrors } from '../../context/ToolStateErrors.jsx'
-import { Input, Label, TextArea } from './style.jsx'
+import { makeStyles } from '@material-ui/core/styles'
+import styled from 'styled-components'
+// import { Chips, Chip } from 'react-chips-input'
+import ChipInput from 'material-ui-chip-input'
+import { Input, Label, TextArea, SnackBar } from './style.jsx'
+
+const NewChipInput = styled(ChipInput)`
+	label.Mui-focused {
+		color: green;
+	}
+	.MuiOutlinedInput-root {
+		fieldset {
+			border: 0;
+		}
+		&:hover fieldset {
+			border: 0;
+		}
+		&.Mui-focused fieldset {
+			border: 0;
+		}
+	}
+`
+const useStyles = makeStyles({
+	root: {
+		display: 'flex',
+		backgroundColor: '#ffffff',
+		border: 0,
+		'&.fieldset': {
+			border: 0,
+			backgroundColor: 'transparent',
+		},
+		'&:hover fieldset': {
+			border: 0,
+			backgroundColor: 'transparent',
+		},
+		'&:Mui-focused fieldset': {
+			border: 0,
+			backgroundColor: 'transparent',
+		},
+	},
+	inputRoot: {
+		backgroundColor: '#F5F4F6', //outside part of input
+		border: '1px solid #EBEAED',
+	},
+	input: {
+		backgroundColor: '#F5F4F6', //inside part of input
+		border: 0,
+		'&:focus': {
+			border: 0,
+			backgroundColor: 'transparent',
+		},
+	},
+	chipContainer: {
+		backgroundColor: '#ffffff',
+	},
+	chip: {
+		backgroundColor: '#ffffff',
+		'&:focus': {
+			border: 0,
+			backgroundColor: 'transparent',
+		},
+	},
+})
 
 export default function FormTool(props) {
+	const classes = useStyles()
 	const { toolData, setToolData } = useToolData()
+	// const { chips, setChips } = useState()
 
 	const [openToast, setOpenToast] = useState(false)
 
@@ -65,8 +129,11 @@ export default function FormTool(props) {
 			setOpenToast(!openToast)
 		}
 	}
-	function handleAddChip(chip) {
-		toolData.tags.push(chip)
+	//
+	//
+
+	function handleAddChip(chipValue) {
+		toolData.tags.push(chipValue)
 		messageTagAdded()
 	}
 
@@ -81,7 +148,7 @@ export default function FormTool(props) {
 		setMessageToast('Tag removed!')
 	}
 
-	function handleDeleteChip(chip, index) {
+	function handleDeleteChip(chipValue, index) {
 		const newToolData = toolData
 		newToolData.tags.splice(index, 1)
 		setToolData(newToolData)
@@ -97,7 +164,7 @@ export default function FormTool(props) {
 	return (
 		<>
 			<form onSubmit={handleChange}>
-				<Label variant='body' for='title'>
+				<Label variant='body' htmlFor='title'>
 					Tool name
 				</Label>
 				<Input
@@ -135,15 +202,24 @@ export default function FormTool(props) {
 				/>
 
 				<Label variant='body'>Tags</Label>
-				<Input
-					id='tags'
+				<NewChipInput
+					variant='outlined'
 					placeholder='Optional...'
+					classes={{
+						root: classes.root, // class name, e.g. `classes-nesting-root-x`
+						inputRoot: classes.inputRoot, // class name, e.g. `classes-nesting-label-x`
+						input: classes.input,
+						chipContainer: classes.chipContainer,
+						label: classes.label,
+						helperText: classes.helperText,
+						chip: classes.chip,
+					}}
 					value={toolData.tags}
-					onAdd={(chip) => handleAddChip(chip)}
-					onDelete={(chip, index) => handleDeleteChip(chip, index)}
+					onAdd={(chipValue) => handleAddChip(chipValue)}
+					onDelete={(chipValue, index) => handleDeleteChip(chipValue, index)}
 				/>
 			</form>
-			<div
+			<SnackBar
 				open={openToast}
 				anchorOrigin={{
 					vertical: 'bottom',

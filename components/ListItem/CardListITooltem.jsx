@@ -1,10 +1,18 @@
 import React from 'react'
 import DeleteToolDialog from '../DeleteToolDialog/DeleteToolDialog'
-import { Card, Title, Content, TitleAction, Typography } from './style'
+import {
+	Card,
+	Title,
+	Content,
+	TitleAction,
+	Typography,
+	Link,
+	Spacer,
+	CardFooter,
+} from './style'
 
 export default function CardListITooltem(props) {
 	const preventDefault = (event) => event.preventDefault()
-
 	return (
 		<Card key={props.item.id}>
 			<Title>
@@ -13,7 +21,9 @@ export default function CardListITooltem(props) {
 					color='quartiaryNeutral'
 					href={props.item.link}
 				>
-					<Typography variant='h4'>{props.item.title}</Typography>
+					<Typography variant='h4' lessMargin>
+						{props.item.title}
+					</Typography>
 				</TitleAction>
 
 				<DeleteToolDialog
@@ -22,13 +32,21 @@ export default function CardListITooltem(props) {
 				/>
 			</Title>
 			<Content>
-				<Typography variant='body'>{props.item.description}</Typography>
-				<div></div>
-				{props.item.tags.map((tag, key) => (
-					<link key={key} onClick={preventDefault}>
-						#{tag}{' '}
-					</link>
-				))}
+				<Typography variant='body' lessMargin>
+					{props.item.description}
+				</Typography>
+				<Spacer></Spacer>
+				<CardFooter>
+					{props.item.tags?.map((tag, key) => (
+						<Typography
+							variant='bodySmallest'
+							key={key}
+							onClick={preventDefault}
+						>
+							#{tag}{' '}
+						</Typography>
+					))}
+				</CardFooter>
 			</Content>
 		</Card>
 	)

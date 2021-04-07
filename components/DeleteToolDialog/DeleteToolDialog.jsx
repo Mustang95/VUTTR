@@ -1,7 +1,15 @@
 import { useState } from 'react'
 import { useToolList } from '../../context/ToolList'
 import axios from 'axios'
-import { ButtonClose, Button, Modal, Title, Actions, Typography } from './style'
+import {
+	ButtonClose,
+	Button,
+	Modal,
+	Title,
+	Actions,
+	Typography,
+	SnackBar,
+} from './style'
 export default function DeleteToolDialog(props) {
 	const { toolList, setToolList } = useToolList()
 	const [openToast, setOpenToast] = useState(false)
@@ -93,7 +101,7 @@ export default function DeleteToolDialog(props) {
 					</Actions>
 				</Modal>
 			) : null}
-			<div
+			<SnackBar
 				open={openToast}
 				anchorOrigin={{
 					vertical: 'bottom',
@@ -102,7 +110,7 @@ export default function DeleteToolDialog(props) {
 				autoHideDuration={3000}
 				onClose={handleCloseToast}
 				message={messageToast}
-			></div>
+			/>
 		</>
 	)
 }
